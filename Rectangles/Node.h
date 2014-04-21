@@ -36,4 +36,3 @@ namespace rec {
 
   inline bool isColision(const Node& node, Vec p) { return p > node.getPos() && p < node.getPos() + node.getSize(); }
 }
-

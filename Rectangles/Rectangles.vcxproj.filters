@@ -27,12 +27,21 @@
     <ClInclude Include="Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NodePrint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svgxml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodePrint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

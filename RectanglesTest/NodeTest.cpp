@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "..\Rectangles\Node.h"
+#include "..\Rectangles\NodePrint.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using rec::Node;
@@ -24,7 +25,7 @@ namespace Microsoft{
   }
 }
 
-namespace QuadtreeTest
+namespace NodeTest
 {
   TEST_CLASS(NodeTest)
   {
@@ -54,6 +55,14 @@ namespace QuadtreeTest
 
       std::vector<const Node*> leaves = root.findLeaves();
       Assert::AreEqual(2u, leaves.size());
+    }
+
+    TEST_METHOD(TestPrint)
+    {
+      std::stringstream testStream;
+      auto root = createTestTree();
+
+      print(root, testStream);
     }
   };
 }
