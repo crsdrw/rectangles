@@ -2,6 +2,9 @@
 #include "CppUnitTest.h"
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\NodePrint.h"
+#include <iostream>
+#include <fstream>
+
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using rec::Node;
@@ -13,6 +16,15 @@ namespace {
     root.setFirst(Vec(0.6f, 0.5f), Vec(0.4f, 0.5f));
     root.setSecond(Vec(0.0f, 0.0f), Vec(0.2f, 0.3f));
     return root;
+  }
+
+  void compareStreams(std::istream& expected, std::istream& actual) {
+    std::string expected_line, actual_line;
+    while (expected.good() && actual.good()) {
+      std::getline(expected, expected_line);
+      std::getline(actual, actual_line);
+      Assert::AreEqual(expected_line, actual_line);
+    }
   }
 }
 
@@ -59,10 +71,17 @@ namespace NodeTest
 
     TEST_METHOD(TestPrint)
     {
-      std::stringstream testStream;
-      auto root = createTestTree();
+      //std::ofstream stream("../TestPrintGold.svg");
+      //Assert::IsTrue(stream.is_open());
 
-      print(root, testStream);
+      std::stringstream stream;
+      auto root = createTestTree();
+      
+      print(root, stream);
+
+      std::ifstream file("../TestPrintGold.svg");
+
+      compareStreams(file, stream);
     }
   };
 }
