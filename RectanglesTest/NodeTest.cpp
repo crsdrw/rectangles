@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\NodePrint.h"
+#include "TestData.h"
 #include <iostream>
 #include <fstream>
 
@@ -11,13 +12,6 @@ using rec::Node;
 using rec::Vec;
 
 namespace {
-  Node createTestTree() {
-    Node root(Vec{ 0.0f, 0.0f }, Vec{ 1.0f, 1.0f });
-    root.setFirst(Vec{0.6f, 0.5f}, Vec{ 0.4f, 0.5f });
-    root.setSecond(Vec{ 0.0f, 0.0f }, Vec{ 0.2f, 0.3f });
-    return root;
-  }
-
   void compareStreams(std::istream& expected, std::istream& actual) {
     std::string expected_line, actual_line;
     while (expected.good() && actual.good()) {
@@ -37,7 +31,7 @@ namespace Microsoft{
   }
 }
 
-namespace NodeTest
+namespace RectanglesTest
 {
   TEST_CLASS(NodeTest)
   {
@@ -76,7 +70,7 @@ namespace NodeTest
 
       std::stringstream stream;
       auto root = createTestTree();
-      
+
       print(root, stream);
 
       std::ifstream file("../TestPrintGold.svg");
