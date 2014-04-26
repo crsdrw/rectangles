@@ -14,6 +14,7 @@ namespace Svgxml {
     public:
       Element(std::string name, std::ostream& stream) : name_(std::move(name)), stream_(stream), indent_(0) {}
       void setIndent(int indent) { indent_ = indent; }
+      Element& operator=(const Element&) = delete;
   };
 
   class Attr : public Element {
