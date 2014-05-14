@@ -10,6 +10,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using rec::Node;
 using rec::Vec;
+using rec::Window;
 
 namespace {
   void compareStreams(std::istream& expected, std::istream& actual) {
@@ -39,7 +40,7 @@ namespace RectanglesTest
 
     TEST_METHOD(CreateNode)
     {
-      Node root(Vec{ 0.0f, 0.0f }, Vec{ 1.0f, 1.0f });
+      Node root(Window{ { 0.0f, 0.0f }, { 1.0f, 1.0f } });
     }
 
     TEST_METHOD(CreateNodeWithLeaves)
@@ -52,7 +53,7 @@ namespace RectanglesTest
       const std::vector<const Node*> leaves2 = root.findIntersectingLeaves(Vec{ 0.7f, 0.8f });
       Assert::AreEqual(1u, leaves2.size());
       Assert::IsNotNull(leaves2[0]);
-      Assert::AreEqual(Vec{ 0.6f, 0.5f }, leaves2[0]->getPos());
+      Assert::AreEqual(Vec{ 0.6f, 0.5f }, leaves2[0]->getWindow().pos);
     }
 
     TEST_METHOD(FindLeaves)

@@ -49,15 +49,15 @@ namespace RectanglesTest
 
     TEST_METHOD(TestLesserOperatorFail1)
     {
-      Assert::IsTrue(b < a);
+      Assert::IsFalse(b < a);
     }
     TEST_METHOD(TestLesserOperatorFail2)
     {
-      Assert::IsTrue(b < b);
+      Assert::IsFalse(b < b);
     }
     TEST_METHOD(TestLesserOperatorFail3)
     {
-      Assert::IsTrue(c < a);
+      Assert::IsFalse(c < a);
     }
 	};
 }

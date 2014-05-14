@@ -1,48 +1,60 @@
 #include "stdafx.h"
 #include "Node.h"
 
+
 namespace {
   using rec::Node;
-  using rec::Vec;
+  using rec::Window;
 
-  inline Node sizeOnlyCopy(const Node& in) { return Node(in.getPos(), in.getSize()); }
+  // local helper functions
 
-  Node
-  findBoundingBox(const std::vector<Node>& nodes) {
-    if (nodes.size() == 0u)
+  Window
+  findBoundingBox(const std::list<Window>& rectangles) {
+    if (rectangles.empty())
       throw std::logic_error("Can't find bounding box of zero nodes");
-    
-    Node box = sizeOnlyCopy(nodes[0]);
-    for (auto node = nodes.cbegin() + 1; node != nodes.cend(); ++node) {
-      box.growNode(node->getPos());
-      box.growNode(getMax(*node));
-    }
+
+    auto rec = rectangles.cbegin();
+    Window box = *rec++;
+    for (; rec != rectangles.cend(); ++rec)
+      growWindow(box, *rec);
     return box;
   }
 
-  void
-  binaryPartition(Node& node) {
-    Vec second_pos;
-    Vec half_size;
+  //int getIntersectingCount(const Node& root, const std::list<Node>& nodes) {
+  //  int count = 0;
+  //  for (auto& node : nodes) {
+  //    if (isColision(root, getCentre(node)))
+  //      count++;
+  //  }
+  //  return count;
+  //}
 
-    if (node.getSize().x > node.getSize().y) {
-      half_size = { node.getSize().x / 2, node.getSize().y };
-      second_pos = node.getPos() + Vec{ half_size.x, 0.0f };
-    } else {
-      half_size = { node.getSize().x, node.getSize().y / 2 };
-      second_pos = node.getPos() + Vec{ 0.0f, half_size.y };
-    }
+  //void
+  //binaryPartition(Node& node, const std::list<Node>& nodes) {
+  //  Vec second_pos;
+  //  Vec half_size;
 
-    node.setFirst(node.getPos(), half_size);
-    node.setSecond(second_pos, half_size);
-  }
+  //  if (node.getSize().x > node.getSize().y) {
+  //    half_size = { node.getSize().x / 2, node.getSize().y };
+  //    second_pos = node.getPos() + Vec{ half_size.x, 0.0f };
+  //  } else {
+  //    half_size = { node.getSize().x, node.getSize().y / 2 };
+  //    second_pos = node.getPos() + Vec{ 0.0f, half_size.y };
+  //  }
+
+  //  node.setFirst(node.getPos(), half_size);
+  //  node.setSecond(second_pos, half_size);
+  //  int intersecting_count = getIntersectingCount(, nodes);
+  //  while (intersecting_count - nodes.size / 2)
+  //}
 
 } // anonymous namespace
 
 namespace rec {
 
+  // member functions
   void Node::findLeavesInternal(std::vector<const Node*>& leaves, const Vec* p) const {
-    if (p && !isColision(*this, *p))
+    if (p && !isColision(window, *p))
       return;
 
     if (isLeaf()) {
@@ -70,28 +82,16 @@ namespace rec {
     return leaves;
   }
 
-  void
-  Node::growNode(Vec p) {
-    if (p.x < pos.x)
-      pos.x = p.x;
-    if (p.y < pos.y)
-      pos.y = p.y;
 
-    Vec offset = p - pos;
-    if (offset.x > size.x)
-      size.x = offset.x;
-    if (offset.y > size.y)
-      size.y = offset.y;
-  }
 
   // Non-member non-friend functions
-  Node 
-  merge(const std::vector<Node>& nodes) {
-    Node root = findBoundingBox(nodes);
-    binaryPartition(root);
-    
-    //TODO
+  //Node 
+  //merge(const std::list<Window>& rectangles) {
+  //  Window root = findBoundingBox(rectangles);
+  //  binaryPartition(root, nodes);
+  //  
+  //  
 
-    return root;
-  }
+  //  return root;
+  //}
 } // namespace rec

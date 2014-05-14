@@ -12,9 +12,6 @@ namespace rec {
   inline bool operator>(Vec lhs, Vec rhs) { return lhs.x > rhs.x && lhs.y > rhs.y; }
   inline bool operator<(Vec lhs, Vec rhs) { return lhs.x < rhs.x && lhs.y < rhs.y; }
   inline bool operator==(Vec lhs, Vec rhs) { return lhs.x == rhs.x && lhs.y == rhs.y; }
+  inline Vec operator/(Vec lhs, float rhs) { return Vec{ lhs.x / rhs, lhs.y / rhs }; }
 
-  struct Window {
-    Vec min;
-    Vec max;
-  };
-}
+} // namespace rec

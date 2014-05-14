@@ -2,16 +2,16 @@
 #include "TestData.h"
 #include <random>
 #include "..\Rectangles\Node.h"
-#include "..\Rectangles\Vec.h"
 
 namespace RectanglesTest {
   using rec::Node;
+  using rec::Window;
   using rec::Vec;
 
   Node createTestTree() {
-    Node root(Vec{ 0.0f, 0.0f }, Vec{ 1.0f, 1.0f });
-    root.setFirst(Vec{0.6f, 0.5f}, Vec{ 0.4f, 0.5f });
-    root.setSecond(Vec{ 0.0f, 0.0f }, Vec{ 0.2f, 0.3f });
+    Node root(Window{ { 0.0f, 0.0f }, { 1.0f, 1.0f } });
+    root.setFirst(Window{ { 0.6f, 0.5f }, { 0.4f, 0.5f } });
+    root.setSecond(Window{ { 0.0f, 0.0f }, { 0.2f, 0.3f } });
     return root;
   }
 
@@ -33,7 +33,8 @@ namespace RectanglesTest {
     for (int i = 0; i != number_of_rectangles; ++i) {
       Vec pos{ x_dist(rng), y_dist(rng) };
       Vec size{ width_dist(rng), y_dist(rng) };
-      rectangles.emplace_back(pos, size);
+      Window window{ pos, size };
+      rectangles.emplace_back(window);
     }
     return rectangles;
   }
