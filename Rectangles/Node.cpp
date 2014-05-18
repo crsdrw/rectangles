@@ -52,8 +52,7 @@ namespace {
     Window bounding_box = node.getWindow();
     Window window1{ bounding_box.pos, { 0.0f, 0.0f } };
     Window window2(bounding_box);
-    int intersecting_count = 0;
-    int half_count = int(rectangles.size() / 2);
+    int half_count = static_cast<int>(rectangles.size() / 2);
     int difference = -half_count;
     float delta = 0.5f;
     float factor = 0.0f;
@@ -64,7 +63,7 @@ namespace {
         factor -= delta;
       delta /= 2.0f;
       divideWindow(bounding_box, window1, window2, factor);
-      intersecting_count = getIntersectingCount(window1, rectangles);
+      int intersecting_count = getIntersectingCount(window1, rectangles);
       difference = intersecting_count - half_count;
     }
     node.setFirst(window1);
@@ -72,26 +71,34 @@ namespace {
     // TODO
   }
 
-} // anonymous namespace
+}  // anonymous namespace
 
 namespace rec {
 
   // member functions
+
+  // Private method to find all leaves that intersect point p, if p is nullptr then just find all leaves.
   void Node::findLeavesInternal(std::vector<const Node*>& leaves, const Vec* p) const {
+    
+    // Check for intersect with point p if it exists
     if (p && !isColision(window, *p))
       return;
 
+    // If this is a leaf of the tree then add self to the list and stop searching
     if (isLeaf()) {
       leaves.push_back(this);
       return;
     }
 
+    // If there are one or two child nodes, recurse
     if (first)
       first->findLeavesInternal(leaves, p);
     if (second)
       second->findLeavesInternal(leaves, p);
   }
 
+
+  // Public method to find all leaves
   std::vector<const Node*>
   Node::findLeaves() const {
     std::vector<const Node*> leaves;
@@ -99,6 +106,7 @@ namespace rec {
     return leaves;
   }
 
+  // Public method to find all leaves intersecting a point p
   std::vector<const Node*>
   Node::findIntersectingLeaves(Vec p) const {
     std::vector<const Node*> leaves;
@@ -109,14 +117,12 @@ namespace rec {
 
 
   // Non-member non-friend functions
-  Node 
+  Node
   merge(const std::list<Window>& rectangles) {
     Window bounding_box = findBoundingBox(rectangles);
     Node root(bounding_box);
     binaryPartition(root, rectangles);
-    
-    
 
     return root;
   }
-} // namespace rec
+}  // namespace rec

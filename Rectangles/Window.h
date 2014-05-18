@@ -15,6 +15,5 @@ namespace rec {
   inline bool isColision(const Window& window, Vec p) { return p > window.pos && p < getMax(window); }
 
   // non-member functions
-  //void growWindow(Window& window, Vec p);
   void growWindow(Window& window, const Window& sub);
-}
+}  // namespace rec

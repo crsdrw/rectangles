@@ -53,7 +53,7 @@ namespace RectanglesTest
       const std::vector<const Node*> leaves2 = root.findIntersectingLeaves(Vec{ 0.7f, 0.8f });
       Assert::AreEqual(1u, leaves2.size());
       Assert::IsNotNull(leaves2[0]);
-      Assert::AreEqual(Vec{ 0.6f, 0.5f }, leaves2[0]->getWindow().pos);
+      Assert::IsTrue(rec::areAlmostEqual(Vec{ 0.6f, 0.5f }, leaves2[0]->getWindow().pos, 1e-20f));
     }
 
     TEST_METHOD(FindLeaves)
