@@ -8,34 +8,42 @@ namespace RectanglesTest {
   using rec::Window;
   using rec::Vec;
 
-  Node createTestTree() {
+  Node createSimpleTree() {
     Node root(Window{ { 0.0f, 0.0f }, { 1.0f, 1.0f } });
-    root.setFirst(Window{ { 0.6f, 0.5f }, { 0.4f, 0.5f } });
-    root.setSecond(Window{ { 0.0f, 0.0f }, { 0.2f, 0.3f } });
+    root.attachFirst(std::unique_ptr<Node>(new Node(Window{ { 0.6f, 0.5f }, { 0.4f, 0.5f } })));
+    root.attachSecond(std::unique_ptr<Node>(new Node(Window{ { 0.0f, 0.0f }, { 0.2f, 0.3f } })));
     return root;
   }
 
-  std::vector<Node> createRandomRectangles(Vec canvas_size, int number_of_rectangles, Vec min_size, Vec max_size) {
+  std::vector<Window> createSimpleListRectangles() {
+    Window window1{ { 0.6f, 0.5f }, { 0.4f, 0.5f } };
+    Window window2{ { 0.0f, 0.0f }, { 0.2f, 0.3f } };
+    return std::vector < Window > {window1, window2};
+  }
+
+  std::vector<Window> createRandomRectangles(Window canvas, int number_of_rectangles, Window range_of_sizes) {
     //static std::random_device rd;
     static std::mt19937 rng(0);
 
-    if (!(min_size < max_size))
-      throw std::logic_error("min_size not smaller than max_size");
+    Vec max_size = getMax(range_of_sizes);
+    Vec min_size = range_of_sizes.pos;
+    Vec canvas_max = getMax(canvas);
 
-    if (!(max_size < canvas_size))
+    if (!( max_size < canvas.size))
       throw std::logic_error("max_size not smaller than canvas_size");
 
-    std::vector<Node> rectangles;
-    std::normal_distribution<float> x_dist(0.0f, canvas_size.x - max_size.x);
-    std::normal_distribution<float> y_dist(0.0f, canvas_size.y - max_size.y);
+    std::vector<Window> rectangles;
+    std::normal_distribution<float> x_dist(canvas.pos.x, canvas_max.x - max_size.x);
+    std::normal_distribution<float> y_dist(canvas.pos.y, canvas_max.y - max_size.y);
     std::normal_distribution<float> width_dist(min_size.x, max_size.x);
     std::normal_distribution<float> height_dist(min_size.y, max_size.y);
     for (int i = 0; i != number_of_rectangles; ++i) {
       Vec pos{ x_dist(rng), y_dist(rng) };
       Vec size{ width_dist(rng), y_dist(rng) };
-      Window window{ pos, size };
-      rectangles.emplace_back(window);
+      rectangles.emplace_back(Window{ pos, size });
     }
     return rectangles;
   }
+
+
 }

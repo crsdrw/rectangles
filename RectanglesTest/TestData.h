@@ -3,11 +3,12 @@
 #include <vector>
 
 namespace rec {
-  struct Vec;
+  struct Window;
   class Node;
 }
 
 namespace RectanglesTest {
-  rec::Node createTestTree();
-  std::vector<rec::Node> createRandomRectangles(rec::Vec canvas_size, int number_of_rectangles, rec::Vec min_size, rec::Vec max_size);
+  rec::Node createSimpleTree();
+  std::vector<rec::Window> createRandomRectangles(rec::Window canvas, int number_of_rectangles, rec::Window range_of_sizes);
+  std::vector<rec::Window> createSimpleListRectangles();
 }

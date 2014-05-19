@@ -89,6 +89,7 @@
     <ClInclude Include="TestData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryPartitionerTest.cpp" />
     <ClCompile Include="NodeTest.cpp" />
     <ClCompile Include="PerformanceTest.cpp" />
     <ClCompile Include="stdafx.cpp">

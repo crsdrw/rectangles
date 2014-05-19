@@ -3,7 +3,6 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <stdexcept>
 
 namespace Svgxml {
 
@@ -11,6 +10,24 @@ namespace Svgxml {
    * Base class for scoped objects for writing XML elements to an output stream 
    */
   class Element {
+    protected:
+      std::string   name_;
+      int           indent_;
+      std::ostream& stream_;
+      void indent() { stream_ << std::string(indent_, ' '); }
+    public:
+      Element(std::string name, std::ostream& stream) : name_(std::move(name)), stream_(stream), indent_(0) {}
+      void setIndent(int indent) { indent_ = indent; }
+      Element& operator=(const Element&) = delete;
+   protected:
+    std::string   name_;
+    unsigned int  indent_;
+    std::ostream& stream_;
+    void indent() { stream_ << std::string(indent_, ' '); }
+   public:
+    Element(std::string name, std::ostream& stream) : name_(std::move(name)), indent_(0), stream_(stream) {}
+    void setIndent(unsigned int new_indent) { indent_ = new_indent; }
+    Element& operator=(const Element&) = delete;
     protected:
       std::string   name_;    ///< Name of the XML element.
       unsigned int  indent_;  ///< Indent level of the element.
@@ -61,13 +78,18 @@ namespace Svgxml {
       /**
       * Configure the attribute to be output on a new line.
       */
-      void setNewLine() { newline_ = true; }
 
       /**
       * Output the attribute to the output stream.
       */
-      void print();
   };
+
+  Attr::Attr(std::string name, std::string value, std::ostream& stream) :
+    Element(std::move(name), stream),
+    value_(std::move(value)),
+    newline_(false) {
+  }
+
 
   void Attr::print() {
     if (newline_) {
@@ -110,6 +132,7 @@ namespace Svgxml {
     * Main part of the tag opening
     */
     void openMain() { indent(); openStart(); attributes(); }      
+    bool              open_;
 
    public:
     /** Constructor, taking name of the tag and the stream to output to.
@@ -139,6 +162,10 @@ namespace Svgxml {
     void close();
   };
 
+  void Tag::addAttribute(std::string name, std::string value) {
+    attr_.emplace_back(std::move(name), std::move(value), stream_);
+  }
+
   void Tag::close() {
     if (!open_)
       throw std::logic_error("Can't close " + name_ + ". Tag not opened.");
@@ -162,7 +189,8 @@ namespace Svgxml {
 
   inline void addSVGHeader(std::ostream& stream) {
     stream << "<\?xml version=\"1.0\" standalone=\"no\" \?>\n";
-    stream << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\n  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
+    stream << "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\n";
+    stream << "  \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
   }
 
-}
+}  // namespace Svgxml

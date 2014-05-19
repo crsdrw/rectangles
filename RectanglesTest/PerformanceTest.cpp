@@ -8,15 +8,15 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using rec::Node;
 using rec::Vec;
+using rec::Window;
 
 
 namespace RectanglesTest
 {
-  std::vector<Node> create10kRandomRectangles() {
-    Vec canvas_size{ 1.0f, 1.0f };
-    Vec min_size{ 0.1f, 0.1f };
-    Vec max_size{ 0.4f, 0.4f };
-    return createRandomRectangles(canvas_size, 10000, min_size, max_size);
+  std::vector<Window> create10kRandomRectangles() {
+    Window canvas{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
+    Window range_of_sizes{ { 0.1f, 0.1f }, { 0.3f, 0.3f } };
+    return createRandomRectangles(canvas, 10000, range_of_sizes);
   }
 
 	TEST_CLASS(PerformanceTest)
@@ -26,8 +26,8 @@ namespace RectanglesTest
 
 		TEST_METHOD(CreateRandomRectangles)
 		{
-      std::vector<Node> nodes = create10kRandomRectangles();
-      Assert::AreEqual((size_t)10000u, nodes.size());
+      auto rectangles = create10kRandomRectangles();
+      Assert::AreEqual((size_t)10000u, rectangles.size());
 		}
 	};
 }

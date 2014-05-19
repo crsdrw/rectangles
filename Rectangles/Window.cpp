@@ -18,20 +18,13 @@ namespace {
     if (p.y > window.size.y)
       window.size.y = p.y;
   }
-}
+}  // namespace
 
 namespace rec {
-  //void
-  //growWindow(Window& window, Vec p) {
-  //  growWindowPos(window, p);
-  //  Vec offset = p - window.pos;
-  //  growWindowSize(window, offset);
-  //}
-
   void
   growWindow(Window& window, const Window& sub) {
     growWindowPos(window, sub.pos);
     Vec offset = getMax(sub) - window.pos;
     growWindowSize(window, offset);
   }
-}
+}  // namespace rec

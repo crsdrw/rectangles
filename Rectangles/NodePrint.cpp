@@ -8,8 +8,7 @@
 #include <sstream>
 
 namespace {
-  static const float PRINT_SIZE = 500.0f;
-
+  const float PRINT_SIZE = 500.0f;
 
   // local helper functions
   std::string getString(float number) {
