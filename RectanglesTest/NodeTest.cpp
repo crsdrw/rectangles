@@ -38,20 +38,19 @@ namespace RectanglesTest
     {
       Node root = createSimpleTree();
 
-      const std::vector<const Node*> leaves1 = root.findIntersectingLeaves(Vec{ 0.5f, 0.5f });
+      const std::vector<Window> leaves1 = root.findIntersectingLeaves(Vec{ 0.5f, 0.5f });
       Assert::AreEqual(0u, leaves1.size());
 
-      const std::vector<const Node*> leaves2 = root.findIntersectingLeaves(Vec{ 0.7f, 0.8f });
+      const std::vector<Window> leaves2 = root.findIntersectingLeaves(Vec{ 0.7f, 0.8f });
       Assert::AreEqual(1u, leaves2.size());
-      Assert::IsNotNull(leaves2[0]);
-      Assert::IsTrue(rec::areAlmostEqual(Vec{ 0.6f, 0.5f }, leaves2[0]->getWindow().pos, 1e-20f));
+      Assert::IsTrue(rec::areAlmostEqual(Window{ { 0.6f, 0.5f }, { 0.4f, 0.5f } }, leaves2[0], 1e-20f));
     }
 
     TEST_METHOD(FindLeaves)
     {
       auto root = createSimpleTree();
 
-      std::vector<const Node*> leaves = root.findLeaves();
+      std::vector<Window> leaves = root.findLeaves();
       Assert::AreEqual(2u, leaves.size());
     }
 

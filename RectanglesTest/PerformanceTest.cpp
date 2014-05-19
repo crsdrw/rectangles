@@ -3,6 +3,7 @@
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\Vec.h"
 #include "TestData.h"
+#include "..\Rectangles\BinaryPartitioner.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -29,5 +30,13 @@ namespace RectanglesTest
       auto rectangles = create10kRandomRectangles();
       Assert::AreEqual((size_t)10000u, rectangles.size());
 		}
+
+    TEST_METHOD(CreateTreeFromRandomRectangles)
+    {
+      auto rectangles = create10kRandomRectangles();
+      rec::BinaryPartitioner bp(rectangles.begin(),rectangles.end());
+      auto node = bp.findTree();
+      Assert::IsTrue(node != nullptr);
+    }
 	};
 }
