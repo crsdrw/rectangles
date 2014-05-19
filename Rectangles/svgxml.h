@@ -11,24 +11,6 @@ namespace Svgxml {
    */
   class Element {
     protected:
-      std::string   name_;
-      int           indent_;
-      std::ostream& stream_;
-      void indent() { stream_ << std::string(indent_, ' '); }
-    public:
-      Element(std::string name, std::ostream& stream) : name_(std::move(name)), stream_(stream), indent_(0) {}
-      void setIndent(int indent) { indent_ = indent; }
-      Element& operator=(const Element&) = delete;
-   protected:
-    std::string   name_;
-    unsigned int  indent_;
-    std::ostream& stream_;
-    void indent() { stream_ << std::string(indent_, ' '); }
-   public:
-    Element(std::string name, std::ostream& stream) : name_(std::move(name)), indent_(0), stream_(stream) {}
-    void setIndent(unsigned int new_indent) { indent_ = new_indent; }
-    Element& operator=(const Element&) = delete;
-    protected:
       std::string   name_;    ///< Name of the XML element.
       unsigned int  indent_;  ///< Indent level of the element.
       std::ostream& stream_;  ///< Stream to output the XML element to.
@@ -73,15 +55,17 @@ namespace Svgxml {
       * Constructor taking the name and content of the attribute and the stream to output to.
       * The default is to not put the attribute on a new line.
       */
-      Attr(std::string name, std::string value, std::ostream& stream) : Element(std::move(name), stream), value_(std::move(value)), newline_(false) {}
+      Attr(std::string name, std::string value, std::ostream& stream);
 
       /**
       * Configure the attribute to be output on a new line.
       */
+      void setNewLine() { newline_ = true; }
 
       /**
       * Output the attribute to the output stream.
       */
+      void print();
   };
 
   Attr::Attr(std::string name, std::string value, std::ostream& stream) :
@@ -132,7 +116,6 @@ namespace Svgxml {
     * Main part of the tag opening
     */
     void openMain() { indent(); openStart(); attributes(); }      
-    bool              open_;
 
    public:
     /** Constructor, taking name of the tag and the stream to output to.
@@ -147,7 +130,7 @@ namespace Svgxml {
     /** Add an attribute to the list of attributes to be written to the stream 
      * @param name The name of the attribute.
      */
-    void addAttribute(std::string name, std::string value) { attr_.emplace_back(std::move(name), std::move(value), stream_); }
+    void addAttribute(std::string name, std::string value);
 
     /** Add an attribute to the list of attributes to be written to the stream that will need to be put on a new line */
     void addAttributeOnNewline(std::string name, std::string value);
