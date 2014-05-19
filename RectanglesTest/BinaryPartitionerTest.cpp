@@ -43,10 +43,10 @@ namespace RectanglesTest
     {
       auto simple_list_rectangles = createSimpleListRectangles();
       BinaryPartitioner bp(simple_list_rectangles.begin(), simple_list_rectangles.end());
-      auto node = bp.findTree();
+      auto root = bp.findTree();
 
       Window expected_box{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
-      Window actual_box = node->getWindow();
+      Window actual_box = root->getWindow();
 
       Assert::IsTrue(areAlmostEqual(expected_box, actual_box, 1e-20f));
       
@@ -56,23 +56,12 @@ namespace RectanglesTest
       // TODO
       Assert::IsTrue(areAlmostEqual(expected_root_box, root_box, 1e-20f));
       
-      auto leaves = root->findLeaves();
-      Assert::AreEqual(2u, leaves.size());
-
-      Window expected_leaf_window1{ { 0.6f, 0.5f }, { 0.4f, 0.5f } };
-      Window expected_leaf_window2{ { 0.0f, 0.0f }, { 0.2f, 0.3f } };
-
-      Assert::IsTrue(areAlmostEqual(expected_leaf_window1, leaves[0], 1e-20f));
-      Assert::IsTrue(areAlmostEqual(expected_leaf_window2, leaves[1], 1e-20f));
-
-      std::vector<Window> leaves = node->findLeaves();
-      
+      auto leaves = root->findLeaves();      
       Assert::AreEqual(2u, leaves.size());
  
       Window expected_sub_window1{ { 0.0f, 0.0f }, { 0.2f, 0.3f } };
       Window actual_sub_window1 = leaves[0];
       Assert::IsTrue(areAlmostEqual(expected_sub_window1, actual_sub_window1, 1e-20f));
-
 
       Window expected_sub_window2{ { 0.6f, 0.5f }, { 0.4f, 0.5f } };
       Window actual_sub_window2 = leaves[1];
