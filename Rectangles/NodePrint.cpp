@@ -29,7 +29,7 @@ namespace {
   std::string getX(const rec::Window& window) {
     return getString(window.pos.x);
   }
-  
+
   std::string getY(const rec::Window& window) {
     return getString(window.pos.y);
   }
@@ -70,7 +70,7 @@ namespace {
     rect.openSelfClosing();
   }
 
-} // anonymous namespace
+}  // namespace
 
 namespace rec {
 
@@ -85,10 +85,10 @@ namespace rec {
       float scale = getScale(bounding_box);
 
       std::vector<const Node*> rectangles = root.findLeaves();
-      for (auto rectangle : rectangles) { // <rect/>
+      for (auto rectangle : rectangles) {  // <rect/>
         Svgxml::Tag rect("rect", stream);
         fillRectTag(rect, rectangle->getWindow(), scale);
       }
-    } // </svg> 
+    }  // </svg>
   }
-}
+}  // namespace rec

@@ -78,20 +78,26 @@ namespace rec {
 
   // member functions
   void Node::findLeavesInternal(std::vector<const Node*>& leaves, const Vec* p) const {
+
+    // if searching for leaves that intersect a particular point p
+    // then if there is no collision give up
     if (p && !isColision(window, *p))
       return;
 
+    // if this node is a leaf of the tree add it to the list and stop
     if (isLeaf()) {
       leaves.push_back(this);
       return;
     }
 
+    // if there are any child nodes recurse
     if (first)
       first->findLeavesInternal(leaves, p);
     if (second)
       second->findLeavesInternal(leaves, p);
   }
 
+  
   std::vector<const Node*>
   Node::findLeaves() const {
     std::vector<const Node*> leaves;
@@ -104,19 +110,5 @@ namespace rec {
     std::vector<const Node*> leaves;
     findLeavesInternal(leaves, &p);
     return leaves;
-  }
-
-
-
-  // Non-member non-friend functions
-  Node 
-  merge(const std::list<Window>& rectangles) {
-    Window bounding_box = findBoundingBox(rectangles);
-    Node root(bounding_box);
-    binaryPartition(root, rectangles);
-    
-    
-
-    return root;
   }
 } // namespace rec
