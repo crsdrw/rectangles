@@ -83,10 +83,10 @@ namespace rec {
 
       float scale = getScale(bounding_box);
 
-      std::vector<const Node*> rectangles = root.findLeaves();
+      std::vector<Window> rectangles = root.findLeaves();
       for (auto rectangle : rectangles) {  // <rect/>
         Svgxml::Tag rect("rect", stream);
-        fillRectTag(rect, rectangle->getWindow(), scale);
+        fillRectTag(rect, rectangle, scale);
       }
     }  // </svg>
   }
