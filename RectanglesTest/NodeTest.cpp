@@ -23,15 +23,6 @@ namespace {
   }
 }
 
-namespace Microsoft{
-  namespace VisualStudio {
-    namespace CppUnitTestFramework {
-      template<> static std::wstring ToString<Vec>(const Vec& t) { std::wstringstream s;	s << t.
-        x << "," << t.y; return s.str(); }
-    }
-  }
-}
-
 namespace RectanglesTest
 {
   TEST_CLASS(NodeTest)
@@ -45,7 +36,7 @@ namespace RectanglesTest
 
     TEST_METHOD(CreateNodeWithLeaves)
     {
-      Node root = createTestTree();
+      Node root = createSimpleTree();
 
       const std::vector<const Node*> leaves1 = root.findIntersectingLeaves(Vec{ 0.5f, 0.5f });
       Assert::AreEqual(0u, leaves1.size());
@@ -58,7 +49,7 @@ namespace RectanglesTest
 
     TEST_METHOD(FindLeaves)
     {
-      auto root = createTestTree();
+      auto root = createSimpleTree();
 
       std::vector<const Node*> leaves = root.findLeaves();
       Assert::AreEqual(2u, leaves.size());
@@ -70,7 +61,7 @@ namespace RectanglesTest
       //Assert::IsTrue(stream.is_open());
 
       std::stringstream stream;
-      auto root = createTestTree();
+      auto root = createSimpleTree();
 
       print(root, stream);
 
