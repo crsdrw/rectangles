@@ -4,7 +4,7 @@
 #include "../Rectangles/Window.h"
 #include "../Rectangles/BinaryPartitioner.h"
 #include "../Rectangles/Node.h"
-#include "TestData.h"
+#include "../Rectangles/TestData.h"
 #include "../Rectangles/StringTools.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -41,7 +41,7 @@ namespace RectanglesTest
 
     TEST_METHOD(TestPartitionVectorSimpleTree)
     {
-      auto simple_list_rectangles = createSimpleListRectangles();
+      auto simple_list_rectangles = rec::createSimpleListRectangles();
       BinaryPartitioner bp(simple_list_rectangles.begin(), simple_list_rectangles.end());
       auto root = bp.findTree();
 
@@ -53,7 +53,7 @@ namespace RectanglesTest
       Assert::IsFalse(root->isLeaf());
       auto root_box = root->getWindow();
       Window expected_root_box{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
-      // TODO
+
       Assert::IsTrue(areAlmostEqual(expected_root_box, root_box, 1e-20f));
       
       auto leaves = root->findLeaves();      

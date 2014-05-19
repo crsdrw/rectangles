@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\NodePrint.h"
-#include "TestData.h"
+#include "..\Rectangles\TestData.h"
 #include <iostream>
 #include <fstream>
 
@@ -36,7 +36,7 @@ namespace RectanglesTest
 
     TEST_METHOD(CreateNodeWithLeaves)
     {
-      Node root = createSimpleTree();
+      Node root = rec::createSimpleTree();
 
       const std::vector<Window> leaves1 = root.findIntersectingLeaves(Vec{ 0.5f, 0.5f });
       Assert::AreEqual(0u, leaves1.size());
@@ -48,7 +48,7 @@ namespace RectanglesTest
 
     TEST_METHOD(FindLeaves)
     {
-      auto root = createSimpleTree();
+      auto root = rec::createSimpleTree();
 
       std::vector<Window> leaves = root.findLeaves();
       Assert::AreEqual(2u, leaves.size());
@@ -60,7 +60,7 @@ namespace RectanglesTest
       //Assert::IsTrue(stream.is_open());
 
       std::stringstream stream;
-      auto root = createSimpleTree();
+      auto root = rec::createSimpleTree();
 
       print(root, stream);
 

@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rectangles", "Rectangles.vcxproj", "{F58985D4-C9AE-4897-994D-AD39D4FFD725}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RectanglesTest", "..\RectanglesTest\RectanglesTest.vcxproj", "{80FE8BB5-1A99-439D-BF5C-3F4E98AB80F4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PerformanceTest", "..\PerformanceTest\PerformanceTest.vcxproj", "{0097FA84-BC12-42AD-B03A-B0BA4C5A92C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F58985D4-C9AE-4897-994D-AD39D4FFD725} = {F58985D4-C9AE-4897-994D-AD39D4FFD725}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B2456F6-83A6-4C40-98C5-92EB7B8CBA06}"
+	ProjectSection(SolutionItems) = preProject
+		Performance3.psess = Performance3.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +31,15 @@ Global
 		{80FE8BB5-1A99-439D-BF5C-3F4E98AB80F4}.Debug|Win32.Build.0 = Debug|Win32
 		{80FE8BB5-1A99-439D-BF5C-3F4E98AB80F4}.Release|Win32.ActiveCfg = Release|Win32
 		{80FE8BB5-1A99-439D-BF5C-3F4E98AB80F4}.Release|Win32.Build.0 = Release|Win32
+		{0097FA84-BC12-42AD-B03A-B0BA4C5A92C3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0097FA84-BC12-42AD-B03A-B0BA4C5A92C3}.Debug|Win32.Build.0 = Debug|Win32
+		{0097FA84-BC12-42AD-B03A-B0BA4C5A92C3}.Release|Win32.ActiveCfg = Release|Win32
+		{0097FA84-BC12-42AD-B03A-B0BA4C5A92C3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

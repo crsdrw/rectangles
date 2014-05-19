@@ -1,13 +1,9 @@
 #include "stdafx.h"
 #include "TestData.h"
 #include <random>
-#include "..\Rectangles\Node.h"
+#include "Node.h"
 
-namespace RectanglesTest {
-  using rec::Node;
-  using rec::Window;
-  using rec::Vec;
-
+namespace rec {
   Node createSimpleTree() {
     Node root(Window{ { 0.0f, 0.0f }, { 1.0f, 1.0f } });
     root.attachFirst(std::unique_ptr<Node>(new Node(Window{ { 0.6f, 0.5f }, { 0.4f, 0.5f } })));
@@ -44,6 +40,4 @@ namespace RectanglesTest {
     }
     return rectangles;
   }
-
-
-}
+}  // namespace rec
