@@ -7,6 +7,8 @@
 
 namespace rec {
 
+  // Node in the tree of rectangles
+  // Each node has up to two sub nodes
   class Node {
   private:
     Window window;
@@ -27,7 +29,7 @@ namespace rec {
 
     std::vector<Window>     findIntersectingLeaves(Vec p) const;
     std::vector<Window>     findLeaves() const;
-    Window                       getWindow() const { return window; }
-    bool                         isLeaf() const { return !(first || second); }
+    Window                  getWindow() const { return window; }
+    bool                    isLeaf() const { return !(first || second); }
   };
 }  // namespace rec

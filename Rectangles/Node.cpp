@@ -16,7 +16,7 @@ namespace rec {
       return;
     }
 
-    // If there are one or two child nodes, recurse
+    // if there are any child nodes recurse
     if (first)
       first->findLeavesInternal(leaves, p);
     if (second)

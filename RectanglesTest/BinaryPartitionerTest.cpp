@@ -5,6 +5,7 @@
 #include "../Rectangles/BinaryPartitioner.h"
 #include "../Rectangles/Node.h"
 #include "TestData.h"
+#include "../Rectangles/StringTools.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using rec::Window;
@@ -42,7 +43,12 @@ namespace RectanglesTest
     {
       auto simple_list_rectangles = createSimpleListRectangles();
       BinaryPartitioner bp(simple_list_rectangles.begin(), simple_list_rectangles.end());
-      auto root = bp.findTree();
+      auto node = bp.findTree();
+
+      Window expected_box{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
+      Window actual_box = node->getWindow();
+
+      Assert::IsTrue(areAlmostEqual(expected_box, actual_box, 1e-20f));
       
       Assert::IsFalse(root->isLeaf());
       auto root_box = root->getWindow();
@@ -59,6 +65,19 @@ namespace RectanglesTest
       Assert::IsTrue(areAlmostEqual(expected_leaf_window1, leaves[0], 1e-20f));
       Assert::IsTrue(areAlmostEqual(expected_leaf_window2, leaves[1], 1e-20f));
 
-    }
+      std::vector<Window> leaves = node->findLeaves();
+      
+      Assert::AreEqual(2u, leaves.size());
+ 
+      Window expected_sub_window1{ { 0.0f, 0.0f }, { 0.2f, 0.3f } };
+      Window actual_sub_window1 = leaves[0];
+      Assert::IsTrue(areAlmostEqual(expected_sub_window1, actual_sub_window1, 1e-20f));
+
+
+      Window expected_sub_window2{ { 0.6f, 0.5f }, { 0.4f, 0.5f } };
+      Window actual_sub_window2 = leaves[1];
+      Assert::IsTrue(areAlmostEqual(expected_sub_window2, actual_sub_window2, 1e-20f));
+
+    } 
 	};
 }
