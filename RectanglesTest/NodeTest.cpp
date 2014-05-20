@@ -3,6 +3,7 @@
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\NodePrint.h"
 #include "..\Rectangles\TestData.h"
+#include "..\Rectangles\BinaryPartitioner.h"
 #include <iostream>
 #include <fstream>
 
@@ -20,6 +21,18 @@ namespace {
       std::getline(actual, actual_line);
       Assert::AreEqual(expected_line, actual_line);
     }
+  }
+
+  std::vector<Window> create100RandomRectangles() {
+    Window canvas{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
+    Window range_of_sizes{ { 0.1f, 0.1f }, { 0.3f, 0.3f } };
+    return createRandomRectangles(canvas, 100, range_of_sizes);
+  }
+
+  std::unique_ptr<Node> createTreeOf100() {
+    auto rectangles = create100RandomRectangles();
+    rec::BinaryPartitioner bp(rectangles.begin(), rectangles.end());
+    return bp.findTree();
   }
 }
 
@@ -67,6 +80,17 @@ namespace RectanglesTest
       std::ifstream file("../TestPrintGold.svg");
 
       compareStreams(file, stream);
+    }
+
+    TEST_METHOD(TestPrint100)
+    {
+      std::ofstream stream("../TestPrint100Gold.svg");
+      Assert::IsTrue(stream.is_open());
+
+      //std::stringstream stream;
+      auto root = createTreeOf100();
+
+      print(*root, stream);
     }
   };
 }
