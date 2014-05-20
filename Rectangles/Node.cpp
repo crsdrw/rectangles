@@ -10,7 +10,7 @@ namespace rec {
     if (p && !isColision(window, *p))
       return;
 
-    // If this is a leaf of the tree then add self to the list and stop searching
+    // If this is a leaf of the tree then add window to the list and stop searching
     if (isLeaf()) {
       leaves.push_back(getWindow());
       return;

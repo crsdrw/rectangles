@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include <vector>
 #include "..\Rectangles\Node.h"
 #include "..\Rectangles\Vec.h"
-#include "TestData.h"
+#include "..\Rectangles\TestData.h"
 #include "..\Rectangles\BinaryPartitioner.h"
 
 
