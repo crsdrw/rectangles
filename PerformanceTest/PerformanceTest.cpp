@@ -8,6 +8,8 @@
 
 namespace {
   using rec::Window;
+  using rec::Vec;
+  using rec::Node;
 
   std::vector<Window> create1MRandomRectangles() {
     Window canvas{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
@@ -15,16 +17,31 @@ namespace {
     return rec::createRandomRectangles(canvas, 1000000, range_of_sizes);
   }
 
-  void create10kTree() {
+  std::unique_ptr<Node>
+  create1MTree() {
     auto rectangles = create1MRandomRectangles();
     rec::BinaryPartitioner bp(rectangles.begin(), rectangles.end());
-    auto node = bp.findTree();
-    std::cout << "Found tree" << std::endl;
+    return bp.findTree();
+  }
+
+  std::vector<Vec> create10RandomPoints() {
+    Window canvas{ { 0.0f, 0.0f }, { 1.0f, 1.0f } };
+    return createRandomPoints(canvas, 10);
+  }
+
+  void findIntersectionsIn1MTree() {
+    auto node = create1MTree();
+    auto points = create10RandomPoints();
+    for (auto point : points) {
+      auto intersecting_leaves = node->findIntersectingLeaves(point);
+    }
   }
 }
 
 int main()
 {
-  create10kTree();
+  //create1MRandomRectangles();
+  //create1MTree();
+  findIntersectionsIn1MTree();
 }
 

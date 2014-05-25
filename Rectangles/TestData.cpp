@@ -17,6 +17,20 @@ namespace rec {
     return std::vector < Window > {window1, window2};
   }
 
+  std::vector<Vec> createRandomPoints(Window canvas, int number_of_points) {
+    static std::mt19937 rng(0);
+
+    Vec canvas_max = getMax(canvas);
+    std::vector<Vec> points;
+
+    std::uniform_real_distribution<float> x_dist(canvas.pos.x, canvas_max.x);
+    std::uniform_real_distribution<float> y_dist(canvas.pos.y, canvas_max.y);
+    for (int i = 0; i != number_of_points; ++i)
+      points.emplace_back(Vec{ x_dist(rng), y_dist(rng) });
+
+    return points;
+  }
+
   std::vector<Window> createRandomRectangles(Window canvas, int number_of_rectangles, Window range_of_sizes) {
     //static std::random_device rd;
     static std::mt19937 rng(0);
@@ -29,10 +43,10 @@ namespace rec {
       throw std::logic_error("max_size not smaller than canvas_size");
 
     std::vector<Window> rectangles;
-    std::normal_distribution<float> x_dist(canvas.pos.x, canvas_max.x - max_size.x);
-    std::normal_distribution<float> y_dist(canvas.pos.y, canvas_max.y - max_size.y);
-    std::normal_distribution<float> width_dist(min_size.x, max_size.x);
-    std::normal_distribution<float> height_dist(min_size.y, max_size.y);
+    std::uniform_real_distribution<float> x_dist(canvas.pos.x, canvas_max.x - max_size.x);
+    std::uniform_real_distribution<float> y_dist(canvas.pos.y, canvas_max.y - max_size.y);
+    std::uniform_real_distribution<float> width_dist(min_size.x, max_size.x);
+    std::uniform_real_distribution<float> height_dist(min_size.y, max_size.y);
     for (int i = 0; i != number_of_rectangles; ++i) {
       Vec pos{ x_dist(rng), y_dist(rng) };
       Vec size{ width_dist(rng), y_dist(rng) };

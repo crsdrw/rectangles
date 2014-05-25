@@ -91,6 +91,9 @@ namespace RectanglesTest
       auto root = createTreeOf100();
 
       print(*root, stream);
+      
+      //std::ifstream file("../TestPrint100Gold.svg");
+      //compareStreams(file, stream);
     }
   };
 }
